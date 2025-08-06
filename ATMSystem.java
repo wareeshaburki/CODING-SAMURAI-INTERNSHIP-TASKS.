@@ -5,7 +5,6 @@ public class ATMSystem extends JFrame {
     private double balance = 1000.0;
     private JTextField amountField;
     private JLabel balanceLabel, messageLabel;
-
     public ATMSystem() {
         setTitle("ATM System");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -28,7 +27,7 @@ public class ATMSystem extends JFrame {
         balanceLabel.setBounds(570, 150, 300, 40);
         panel.add(balanceLabel);
 
-        JLabel amountText = new JLabel("Amount:");
+        JLabel amountText = new JLabel("Amount: ");
         amountText.setFont(new Font("Arial", Font.PLAIN, 22));
         amountText.setForeground(new Color(236, 240, 241));
         amountText.setBounds(540, 220, 100, 30);
@@ -39,26 +38,26 @@ public class ATMSystem extends JFrame {
         amountField.setBounds(640, 220, 200, 30);
         panel.add(amountField);
 
-        JButton depositBtn = new JButton("Deposit");
-        depositBtn.setFont(new Font("Arial", Font.BOLD, 22));
-        depositBtn.setBackground(new Color(41, 128, 185));
-        depositBtn.setForeground(Color.WHITE);
-        depositBtn.setBounds(540, 280, 140, 50);
-        panel.add(depositBtn);
+        JButton depositButton = new JButton("Deposit");
+        depositButton.setFont(new Font("Arial", Font.BOLD, 22));
+        depositButton.setBackground(new Color(41, 128, 185));
+        depositButton.setForeground(Color.WHITE);
+        depositButton.setBounds(540, 280, 140, 50);
+        panel.add(depositButton);
 
-        JButton withdrawBtn = new JButton("Withdraw");
-        withdrawBtn.setFont(new Font("Arial", Font.BOLD, 22));
-        withdrawBtn.setBackground(new Color(192, 57, 43));
-        withdrawBtn.setForeground(Color.WHITE);
-        withdrawBtn.setBounds(700, 280, 140, 50);
-        panel.add(withdrawBtn);
+        JButton withdrawButton = new JButton("Withdraw");
+        withdrawButton.setFont(new Font("Arial", Font.BOLD, 22));
+        withdrawButton.setBackground(new Color(192, 57, 43));
+        withdrawButton.setForeground(Color.WHITE);
+        withdrawButton.setBounds(700, 280, 140, 50);
+        panel.add(withdrawButton);
 
-        JButton checkBtn = new JButton("Check Balance");
-        checkBtn.setFont(new Font("Arial", Font.BOLD, 22));
-        checkBtn.setBackground(new Color(39, 174, 96));
-        checkBtn.setForeground(Color.WHITE);
-        checkBtn.setBounds(500, 350, 380, 50);
-        panel.add(checkBtn);
+        JButton checkButton = new JButton("Check Balance");
+        checkButton.setFont(new Font("Arial", Font.BOLD, 22));
+        checkButton.setBackground(new Color(39, 174, 96));
+        checkButton.setForeground(Color.WHITE);
+        checkButton.setBounds(500, 350, 380, 50);
+        panel.add(checkButton);
 
         messageLabel = new JLabel("");
         messageLabel.setFont(new Font("Arial", Font.BOLD, 20));
@@ -66,32 +65,29 @@ public class ATMSystem extends JFrame {
         messageLabel.setBounds(580, 420, 400, 30);
         panel.add(messageLabel);
 
-        JButton exitBtn = new JButton("Exit");
-        exitBtn.setFont(new Font("Arial", Font.BOLD, 18));
-        exitBtn.setBackground(new Color(127, 140, 141));
-        exitBtn.setForeground(Color.WHITE);
-        exitBtn.setBounds(630, 470, 100, 40);
-        panel.add(exitBtn);
+        JButton exitButton = new JButton("Exit");
+        exitButton.setFont(new Font("Arial", Font.BOLD, 18));
+        exitButton.setBackground(new Color(127, 140, 141));
+        exitButton.setForeground(Color.WHITE);
+        exitButton.setBounds(630, 470, 100, 40);
+        panel.add(exitButton);
 
-        depositBtn.addActionListener(e -> deposit());
-        withdrawBtn.addActionListener(e -> withdraw());
-        checkBtn.addActionListener(e -> updateBalance());
-        exitBtn.addActionListener(e -> System.exit(0));
-
+        depositButton.addActionListener(e -> deposit());
+        withdrawButton.addActionListener(e -> withdraw());
+        checkButton.addActionListener(e -> updateBalance());
+        exitButton.addActionListener(e -> System.exit(0));
         setContentPane(panel);
         setVisible(true);
     }
-
     private void updateBalance() {
         balanceLabel.setText("Balance: $" + String.format("%.2f", balance));
         messageLabel.setText("Your current balance is $" + String.format("%.2f", balance));
     }
-
     private void deposit() {
         try {
             double amount = Double.parseDouble(amountField.getText());
             if (amount <= 0) {
-                messageLabel.setText("Enter a positive amount to deposit.");
+                messageLabel.setText("Enter a positive amount to deposit");
             } else {
                 balance += amount;
                 updateBalance();
@@ -99,7 +95,7 @@ public class ATMSystem extends JFrame {
             }
             amountField.setText("");
         } catch (NumberFormatException ex) {
-            messageLabel.setText("Invalid amount entered.");
+            messageLabel.setText("Invalid amount entered");
         }
     }
 
@@ -107,9 +103,9 @@ public class ATMSystem extends JFrame {
         try {
             double amount = Double.parseDouble(amountField.getText());
             if (amount <= 0) {
-                messageLabel.setText("Enter a positive amount to withdraw.");
+                messageLabel.setText("Enter a positive amount to withdraw");
             } else if (amount > balance) {
-                messageLabel.setText("Insufficient balance!");
+                messageLabel.setText("Insufficient balance");
             } else {
                 balance -= amount;
                 updateBalance();
@@ -117,7 +113,7 @@ public class ATMSystem extends JFrame {
             }
             amountField.setText("");
         } catch (NumberFormatException ex) {
-            messageLabel.setText("Invalid amount entered.");
+            messageLabel.setText("Invalid amount entered");
         }
     }
 
