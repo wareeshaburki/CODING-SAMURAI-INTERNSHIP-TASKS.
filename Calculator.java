@@ -7,22 +7,18 @@ public class Calculator extends JFrame {
     private double firstNum = 0;
     private String operator = "";
     private boolean startNew = true;
-
     public Calculator() {
         setTitle("Calculator");
         setSize(350, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-
         display = new JTextField();
         display.setFont(new Font("Arial", Font.BOLD, 28));
         display.setEditable(false);
         display.setBackground(Color.WHITE);
         display.setHorizontalAlignment(JTextField.RIGHT);
-
         JPanel buttonPanel = new JPanel(new GridLayout(5, 4, 5, 5));
         buttonPanel.setBackground(new Color(220, 220, 220));
-
         String[] buttons = {
             "7", "8", "9", "/",
             "4", "5", "6", "*",
@@ -30,7 +26,6 @@ public class Calculator extends JFrame {
             "0", ".", "=", "+",
             "C"
         };
-
         for (String text : buttons) {
             JButton btn = new JButton(text);
             btn.setFont(new Font("Arial", Font.BOLD, 22));
@@ -43,12 +38,10 @@ public class Calculator extends JFrame {
             btn.addActionListener(e -> handleButton(text));
             buttonPanel.add(btn);
         }
-
         setLayout(new BorderLayout(10, 10));
         add(display, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
     }
-
     private void handleButton(String text) {
         if (text.matches("[0-9]") || text.equals(".")) {
             if (startNew) {
@@ -95,7 +88,6 @@ public class Calculator extends JFrame {
             startNew = true;
         }
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new Calculator().setVisible(true));
     }
