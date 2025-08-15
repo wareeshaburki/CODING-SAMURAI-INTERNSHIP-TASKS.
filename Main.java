@@ -1,30 +1,39 @@
-import java.awt.*;
-import java.util.*;
-import javax.swing.*;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.BorderLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
+import javax.swing.BorderFactory;
+import javax.swing.SwingUtilities;
+import javax.swing.JLabel;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import javax.swing.border.EmptyBorder;
 
 enum Genre {
     FICTION, NONFICTION, PROGRAMMING, SCIENCE, HISTORY
 }
-
 class Book {
     String title, author;
     Genre genre;
     boolean isAvailable = true;
-
     Book(String title, String author, Genre genre) {
         this.title = title;
         this.author = author;
         this.genre = genre;
     }
 }
-
 class BorrowRecord {
     String bookTitle;
     Genre genre;
     Date date;
     String action;
-
     BorrowRecord(String bookTitle, Genre genre, String action) {
         this.bookTitle = bookTitle;
         this.genre = genre;
@@ -36,7 +45,6 @@ class BorrowRecord {
 class Library {
     ArrayList<Book> books = new ArrayList<>();
     ArrayList<BorrowRecord> history = new ArrayList<>();
-
     Library() {
         books.add(new Book("Java Programming", "James Gosling", Genre.PROGRAMMING));
         books.add(new Book("Effective Java", "Joshua Bloch", Genre.PROGRAMMING));
@@ -55,7 +63,6 @@ class Library {
         books.add(new Book("The Code Book", "Simon Singh", Genre.SCIENCE));
         books.add(new Book("The Art of Computer Programming", "Donald Knuth", Genre.PROGRAMMING));
     }
-
     ArrayList<Book> getBooksByGenre(Genre genre) {
         ArrayList<Book> list = new ArrayList<>();
         for (Book b : books) {
@@ -63,7 +70,6 @@ class Library {
         }
         return list;
     }
-
     Book searchBook(String title, Genre genre) {
         for (Book b : books) {
             if (b.title.equalsIgnoreCase(title) && b.genre == genre)
@@ -71,7 +77,6 @@ class Library {
         }
         return null;
     }
-
     boolean borrowBook(String title, Genre genre) {
         Book b = searchBook(title, genre);
         if (b != null && b.isAvailable) {
@@ -81,7 +86,6 @@ class Library {
         }
         return false;
     }
-
     boolean returnBook(String title, Genre genre) {
         Book b = searchBook(title, genre);
         if (b != null && !b.isAvailable) {
@@ -91,11 +95,9 @@ class Library {
         }
         return false;
     }
-
     ArrayList<BorrowRecord> getHistory() {
         return history;
     }
-
     ArrayList<Book> getBooks() {
         return books;
     }
@@ -104,36 +106,29 @@ class Library {
 public class Main extends JFrame {
     Library library = new Library();
     JTextArea outputArea = new JTextArea(12, 40);
-
     public Main() {
         setTitle("Library Management System");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setLocationRelativeTo(null);
-        try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception e) {}
-
         JPanel mainPanel = new JPanel(new BorderLayout(15, 15));
         mainPanel.setBackground(new Color(240, 248, 255));
         mainPanel.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(mainPanel);
-
         JLabel titleLabel = new JLabel("Library Management System", JLabel.CENTER);
         titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 32));
         titleLabel.setForeground(new Color(0, 51, 102));
         mainPanel.add(titleLabel, BorderLayout.NORTH);
-
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(6, 1, 10, 10));
         buttonPanel.setBackground(new Color(224, 236, 255));
         buttonPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
-
         JButton searchBtn = new JButton("Search Book");
         JButton borrowBtn = new JButton("Borrow Book");
         JButton returnBtn = new JButton("Return Book");
         JButton viewBooksBtn = new JButton("View All Books");
         JButton historyBtn = new JButton("View Borrow History");
         JButton clearBtn = new JButton("Clear Output");
-
         Font btnFont = new Font("Segoe UI", Font.PLAIN, 18);
         for (JButton btn : new JButton[]{searchBtn, borrowBtn, returnBtn, viewBooksBtn, historyBtn, clearBtn}) {
             btn.setFont(btnFont);
@@ -143,9 +138,7 @@ public class Main extends JFrame {
             btn.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 102), 2));
             buttonPanel.add(btn);
         }
-
         mainPanel.add(buttonPanel, BorderLayout.WEST);
-
         outputArea.setEditable(false);
         outputArea.setFont(new Font("Consolas", Font.PLAIN, 16));
         outputArea.setBackground(new Color(255, 255, 255));
@@ -153,8 +146,6 @@ public class Main extends JFrame {
         outputArea.setBorder(BorderFactory.createLineBorder(new Color(0, 51, 102), 2));
         JScrollPane scrollPane = new JScrollPane(outputArea);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
-
-        // Button actions
         searchBtn.addActionListener(e -> {
             Genre genre = chooseGenre();
             if (genre == null) return;
@@ -176,7 +167,6 @@ public class Main extends JFrame {
                 }
             }
         });
-
         borrowBtn.addActionListener(e -> {
             Genre genre = chooseGenre();
             if (genre == null) return;
@@ -194,7 +184,6 @@ public class Main extends JFrame {
                 outputArea.setText(success ? "Book borrowed successfully." : "Book not available or not found.");
             }
         });
-
         returnBtn.addActionListener(e -> {
             Genre genre = chooseGenre();
             if (genre == null) return;
@@ -212,7 +201,6 @@ public class Main extends JFrame {
                 outputArea.setText(success ? "Book returned successfully." : "Book not found or not borrowed.");
             }
         });
-
         viewBooksBtn.addActionListener(e -> {
             StringBuilder sb = new StringBuilder("Books in Library by Genre:\n\n");
             for (Genre genre : Genre.values()) {
@@ -230,7 +218,6 @@ public class Main extends JFrame {
             }
             outputArea.setText(sb.toString());
         });
-
         historyBtn.addActionListener(e -> {
             StringBuilder sb = new StringBuilder("Borrowing History:\n\n");
             for (BorrowRecord r : library.getHistory()) {
@@ -240,16 +227,10 @@ public class Main extends JFrame {
             if (library.getHistory().isEmpty()) sb.append("No history yet.");
             outputArea.setText(sb.toString());
         });
-
         clearBtn.addActionListener(e -> outputArea.setText(""));
-
-        outputArea.setText("Welcome to the Library Management System!\n\n" +
-                "Use the buttons on the left to manage books.\n");
-        outputArea.setCaretPosition(20);
-
+        outputArea.setText("Welcome to the Library Management System!\n\nUse the buttons on the left to manage books.\n");
         setVisible(true);
     }
-
     private Genre chooseGenre() {
         Genre[] genres = Genre.values();
         String[] genreNames = Arrays.stream(genres).map(Enum::name).toArray(String[]::new);
@@ -258,7 +239,6 @@ public class Main extends JFrame {
         if (selected == null) return null;
         return Genre.valueOf(selected);
     }
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Main::new);
     }
